@@ -1,0 +1,12 @@
+{
+  "name": "testimage",
+  "version": "1.0.0",
+  "main": "index.mjs",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.mjs"
+  },
+  "dependencies": {
+    "axios": "^0.24.0"
+  }
+}
