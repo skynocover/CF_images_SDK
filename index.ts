@@ -1,14 +1,14 @@
 import axios from 'axios';
 
-let account_id = null;
-let token = null;
+let account_id: string | null = null;
+let token: string | null = null;
 
 /**
  * Init SDK
  * @param account_id cloudflare account_id
  * @param token cloudflare access token
  */
-export const Init = (accountID, Token) => {
+export const Init = (accountID: string, Token: string) => {
   account_id = accountID;
   token = Token;
 };
@@ -17,7 +17,7 @@ export const Init = (accountID, Token) => {
  * get upload url
  * @param expiry url expire time, minimum 2 minutes & maximun 6 hours, default is undefined
  */
-export const GetUploadURL = async (expiry = undefined) => {
+export const GetUploadURL = async (expiry: string | undefined = undefined) => {
   try {
     if (!account_id || !token) {
       return { errorMessages: 'Please Init first' };
@@ -25,7 +25,6 @@ export const GetUploadURL = async (expiry = undefined) => {
     const { data } = await axios({
       method: 'POST',
       url: `https://api.cloudflare.com/client/v4/accounts/${account_id}/images/v1/direct_upload`,
-      data: { requireSignedURLs: signed },
       headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
     });
 
@@ -34,7 +33,7 @@ export const GetUploadURL = async (expiry = undefined) => {
     }
 
     return { id: data.result.id, uploadURL: data.result.uploadURL };
-  } catch (error) {
+  } catch (error: any) {
     return { errorMessages: error.response.data };
   }
 };
@@ -43,7 +42,7 @@ export const GetUploadURL = async (expiry = undefined) => {
  * Get image info
  * @param image_id image_id
  */
-export const GetImageInfo = async (image_id) => {
+export const GetImageInfo = async (image_id: string) => {
   try {
     if (!account_id || !token) {
       return { errorMessages: 'Please Init first' };
@@ -57,7 +56,7 @@ export const GetImageInfo = async (image_id) => {
       return { errorMessages: data.messages };
     }
     return data.result;
-  } catch (error) {
+  } catch (error: any) {
     return { errorMessages: error.response.data };
   }
 };
@@ -68,7 +67,7 @@ export const GetImageInfo = async (image_id) => {
  * @param image_id image_id
  * @param requireSignedURLs set image private, default is true
  */
-export const UpdateImage = async (image_id, requireSignedURLs = true) => {
+export const UpdateImage = async (image_id: string, requireSignedURLs = true) => {
   try {
     if (!account_id || !token) {
       return { errorMessages: 'Please Init first' };
@@ -83,7 +82,7 @@ export const UpdateImage = async (image_id, requireSignedURLs = true) => {
       return { errorMessages: data.messages };
     }
     return data.result;
-  } catch (error) {
+  } catch (error: any) {
     return { errorMessages: error.response.data };
   }
 };
@@ -92,7 +91,7 @@ export const UpdateImage = async (image_id, requireSignedURLs = true) => {
  * Delete image
  * @param image_id image_id
  */
-export const DeleteImage = async (image_id) => {
+export const DeleteImage = async (image_id: string) => {
   try {
     if (!account_id || !token) {
       return { errorMessages: 'Please Init first' };
@@ -106,7 +105,7 @@ export const DeleteImage = async (image_id) => {
       return { errorMessages: data.messages };
     }
     return null;
-  } catch (error) {
+  } catch (error: any) {
     return { errorMessages: error.response.data };
   }
 };
@@ -129,7 +128,7 @@ export const GetUsageStatics = async () => {
       return { errorMessages: data.messages };
     }
     return data.result;
-  } catch (error) {
+  } catch (error: any) {
     return { errorMessages: error.response.data };
   }
 };
